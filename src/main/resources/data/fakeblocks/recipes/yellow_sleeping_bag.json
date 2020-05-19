@@ -1,0 +1,18 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "CCW"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "C": {
+      "item": "minecraft:yellow_carpet"
+    }
+  },
+  "result": {
+    "item": "sleeping_bags:yellow_sleeping_bag",
+    "count": 1
+  }
+}

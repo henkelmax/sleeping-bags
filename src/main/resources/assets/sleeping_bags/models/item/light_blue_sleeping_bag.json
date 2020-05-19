@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "sleeping_bags:item/light_blue_sleeping_bag"
+  }
+}
