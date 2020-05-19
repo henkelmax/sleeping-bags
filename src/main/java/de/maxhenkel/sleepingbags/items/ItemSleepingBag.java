@@ -91,11 +91,11 @@ public class ItemSleepingBag extends Item {
         }
         //player.setPose(Pose.SLEEPING);
         try {
-            Method setPose = ObfuscationReflectionHelper.findMethod(Entity.class, "func_213301_b");
+            Method setPose = ObfuscationReflectionHelper.findMethod(Entity.class, "func_213301_b", Pose.class);
             setPose.invoke(player, Pose.SLEEPING);
         } catch (Exception x) {
             try {
-                Method setPose1 = ObfuscationReflectionHelper.findMethod(Entity.class, "setPose");
+                Method setPose1 = ObfuscationReflectionHelper.findMethod(Entity.class, "setPose", Pose.class);
                 setPose1.invoke(player, Pose.SLEEPING);
             } catch (Exception e) {
                 e.printStackTrace();
