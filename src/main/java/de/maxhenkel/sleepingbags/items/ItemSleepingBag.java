@@ -89,31 +89,21 @@ public class ItemSleepingBag extends Item {
         if (player.isPassenger()) {
             player.stopRiding();
         }
-        //player.setPose(Pose.SLEEPING);
+
         try {
-            Method setPose = ObfuscationReflectionHelper.findMethod(Entity.class, "func_213301_b", Pose.class);
-            setPose.invoke(player, Pose.SLEEPING);
-        } catch (Exception x) {
-            try {
-                Method setPose1 = ObfuscationReflectionHelper.findMethod(Entity.class, "setPose", Pose.class);
-                setPose1.invoke(player, Pose.SLEEPING);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Method setPose1 = ObfuscationReflectionHelper.findMethod(Entity.class, "setPose", Pose.class);
+            setPose1.invoke(player, Pose.SLEEPING);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         player.setBedPosition(pos);
         player.setMotion(Vec3d.ZERO);
         player.isAirBorne = true;
 
-
         try {
-            ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "field_71076_b");
-        } catch (ObfuscationReflectionHelper.UnableToFindFieldException x) {
-            try {
-                ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "sleepTimer");
-            } catch (ObfuscationReflectionHelper.UnableToFindFieldException e) {
-                e.printStackTrace();
-            }
+            ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "sleepTimer");
+        } catch (ObfuscationReflectionHelper.UnableToFindFieldException e) {
+            e.printStackTrace();
         }
 
         if (player.world instanceof ServerWorld) {

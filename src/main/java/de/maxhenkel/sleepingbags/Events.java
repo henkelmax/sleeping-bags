@@ -17,7 +17,7 @@ public class Events {
 
     @SubscribeEvent
     public void sleepTick(TickEvent.PlayerTickEvent event) {
-        if(!Config.SERVER.ONE_PLAYER_SLEEP.get()){
+        if (!Config.SERVER.ONE_PLAYER_SLEEP.get()) {
             return;
         }
         if (event.player.world instanceof ServerWorld) {
@@ -29,10 +29,7 @@ public class Events {
                         serverWorld.setDayTime(l - l % 24000L);
                     }
 
-                    serverWorld.getPlayers().stream().filter(LivingEntity::isSleeping).forEach((playerEntity) -> {
-                        //playerEntity.wakeUpPlayer(false, false, true);
-                        playerEntity.wakeUp();
-                    });
+                    serverWorld.getPlayers().stream().filter(LivingEntity::isSleeping).forEach(PlayerEntity::wakeUp);
                     if (serverWorld.getGameRules().getBoolean(GameRules.DO_WEATHER_CYCLE)) {
                         serverWorld.getDimension().resetRainAndThunder();
                     }
@@ -45,9 +42,6 @@ public class Events {
 
     @SubscribeEvent
     public void sleepCheck(SleepingLocationCheckEvent event) {
-        if(!Config.SERVER.ONE_PLAYER_SLEEP.get()){
-            return;
-        }
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
             for (Hand hand : Hand.values()) {
