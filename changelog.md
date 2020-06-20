@@ -1,1 +1,1 @@
-- Updated Forge version
+- Fixed some errors in the console

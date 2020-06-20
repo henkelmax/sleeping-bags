@@ -93,18 +93,14 @@ public class ItemSleepingBag extends Item {
         try {
             Method setPose1 = ObfuscationReflectionHelper.findMethod(Entity.class, "setPose", Pose.class);
             setPose1.invoke(player, Pose.SLEEPING);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
         player.setBedPosition(pos);
         player.setMotion(Vec3d.ZERO);
         player.isAirBorne = true;
 
         try {
             ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "sleepTimer");
-        } catch (ObfuscationReflectionHelper.UnableToFindFieldException e) {
-            e.printStackTrace();
-        }
+        } catch (ObfuscationReflectionHelper.UnableToFindFieldException e) {}
 
         if (player.world instanceof ServerWorld) {
             ((ServerWorld) player.world).updateAllPlayersSleepingFlag();
