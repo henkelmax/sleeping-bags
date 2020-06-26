@@ -1,10 +1,14 @@
 package de.maxhenkel.sleepingbags.items;
 
+import com.mojang.datafixers.util.Either;
 import de.maxhenkel.sleepingbags.Main;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.BedBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -13,24 +17,24 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Unit;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.extensions.IForgeDimension;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Optional;
 
 public class ItemSleepingBag extends Item {
 
     public ItemSleepingBag(DyeColor dyeColor) {
         super(new Properties().group(ItemGroup.MISC).maxStackSize(1));
-        setRegistryName(new ResourceLocation(Main.MODID, dyeColor.getName() + "_sleeping_bag"));
+        setRegistryName(new ResourceLocation(Main.MODID, dyeColor.func_176610_l() + "_sleeping_bag"));
     }
 
     @Override
@@ -38,53 +42,56 @@ public class ItemSleepingBag extends Item {
         if (worldIn.isRemote) {
             return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
         }
-        IForgeDimension.SleepResult sleepResult = worldIn.dimension.canSleepAt(playerIn, playerIn.getPosition());
 
-        if (sleepResult.equals(IForgeDimension.SleepResult.DENY) || sleepResult.equals(IForgeDimension.SleepResult.BED_EXPLODES)) {
-            playerIn.sendStatusMessage(new TranslationTextComponent("message.cant_sleep_here"), true);
+        if (!BedBlock.func_235330_a_(worldIn)) {
+            playerIn.sendStatusMessage(new TranslationTextComponent("message.sleeping_bags.cant_sleep_here"), true);
             return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
         }
 
-        if (!playerIn.onGround) {
-            playerIn.sendStatusMessage(new TranslationTextComponent("message.cant_sleep_in_air"), true);
+        if (!playerIn.func_233570_aj_()) {
+            playerIn.sendStatusMessage(new TranslationTextComponent("message.sleeping_bags.cant_sleep_in_air"), true);
             return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
         }
 
-        PlayerEntity.SleepResult sleepResult1 = trySleep(playerIn);
-        if (sleepResult1 != null) {
-            playerIn.sendStatusMessage(sleepResult1.getMessage(), true);
-        }
+        trySleep((ServerPlayerEntity) playerIn).ifLeft((sleepResult) -> {
+            if (sleepResult != null) {
+                playerIn.sendStatusMessage(sleepResult.getMessage(), true);
+            }
+        });
 
         return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
     }
 
-    public PlayerEntity.SleepResult trySleep(PlayerEntity player) {
-        PlayerEntity.SleepResult ret = ForgeEventFactory.onPlayerSleepInBed(player, Optional.empty());
+    public Either<PlayerEntity.SleepResult, Unit> trySleep(ServerPlayerEntity player) {
+        PlayerEntity.SleepResult ret = net.minecraftforge.event.ForgeEventFactory.onPlayerSleepInBed(player, Optional.empty());
         if (ret != null) {
-            return ret;
-        }
-        BlockPos pos = player.getPosition();
-        if (player.isSleeping() || !player.isAlive()) {
-            return PlayerEntity.SleepResult.OTHER_PROBLEM;
+            return Either.left(ret);
         }
 
-        if (!player.world.dimension.isSurfaceWorld()) {
-            return PlayerEntity.SleepResult.NOT_POSSIBLE_HERE;
+        if (player.isSleeping() || !player.isAlive()) {
+            return Either.left(PlayerEntity.SleepResult.OTHER_PROBLEM);
+        }
+
+        if (!player.world.func_230315_m_().func_236043_f_()) {
+            return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_HERE);
+        }
+        if (player.world.isDaytime()) {
+            return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_NOW);
         }
 
         if (!ForgeEventFactory.fireSleepingTimeCheck(player, Optional.empty())) {
-            return PlayerEntity.SleepResult.NOT_POSSIBLE_NOW;
+            return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_NOW);
         }
 
         if (!player.isCreative()) {
-            double width = 8D;
-            double height = 5D;
-            if (!player.world.getEntitiesWithinAABB(MonsterEntity.class, new AxisAlignedBB(pos.getX() - width, pos.getY() - height, pos.getZ() - width, pos.getX() + width, pos.getY() + height, pos.getZ() + width), monsterEntity -> monsterEntity.isPreventingPlayerRest(player)).isEmpty()) {
-                return PlayerEntity.SleepResult.NOT_SAFE;
+            Vector3d vector3d = player.getPositionVec();
+            List<MonsterEntity> list = player.world.getEntitiesWithinAABB(MonsterEntity.class, new AxisAlignedBB(vector3d.getX() - 8D, vector3d.getY() - 5D, vector3d.getZ() - 8D, vector3d.getX() + 8D, vector3d.getY() + 5D, vector3d.getZ() + 8D), (entity) -> entity.func_230292_f_(player));
+            if (!list.isEmpty()) {
+                return Either.left(PlayerEntity.SleepResult.NOT_SAFE);
             }
         }
 
-        //player.startSleeping(player.getPosition());
+        //player.startSleeping(at);
         player.takeStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
         if (player.isPassenger()) {
             player.stopRiding();
@@ -93,19 +100,27 @@ public class ItemSleepingBag extends Item {
         try {
             Method setPose1 = ObfuscationReflectionHelper.findMethod(Entity.class, "setPose", Pose.class);
             setPose1.invoke(player, Pose.SLEEPING);
-        } catch (Exception e) {}
-        player.setBedPosition(pos);
-        player.setMotion(Vec3d.ZERO);
+        } catch (Exception e) {
+        }
+        player.setBedPosition(player.func_233580_cy_());
+        player.setMotion(Vector3d.ZERO);
         player.isAirBorne = true;
 
+        //player.sleepTimer = 0;
         try {
             ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "sleepTimer");
-        } catch (ObfuscationReflectionHelper.UnableToFindFieldException e) {}
+        } catch (ObfuscationReflectionHelper.UnableToFindFieldException e) {
+        }
 
         if (player.world instanceof ServerWorld) {
             ((ServerWorld) player.world).updateAllPlayersSleepingFlag();
         }
 
-        return null;
+
+        player.addStat(Stats.SLEEP_IN_BED);
+        CriteriaTriggers.SLEPT_IN_BED.trigger(player);
+
+        ((ServerWorld) player.world).updateAllPlayersSleepingFlag();
+        return Either.right(Unit.INSTANCE);
     }
 }

@@ -4,6 +4,8 @@ import de.maxhenkel.sleepingbags.items.ItemSleepingBag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
+import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.GameRules;
@@ -26,15 +28,16 @@ public class Events {
                 if (event.player.getSleepTimer() >= 100) {
                     if (serverWorld.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)) {
                         long l = serverWorld.getDayTime() + 24000L;
-                        serverWorld.setDayTime(l - l % 24000L);
+                        serverWorld.func_241114_a_(l - l % 24000L);
                     }
 
                     serverWorld.getPlayers().stream().filter(LivingEntity::isSleeping).forEach(PlayerEntity::wakeUp);
                     if (serverWorld.getGameRules().getBoolean(GameRules.DO_WEATHER_CYCLE)) {
-                        serverWorld.getDimension().resetRainAndThunder();
+                        serverWorld.func_241113_a_(6000, 0, false, false);
+                        //serverWorld.getDimension().resetRainAndThunder();
                     }
 
-                    serverWorld.getServer().getPlayerList().sendMessage(new TranslationTextComponent("message.sleep", event.player.getDisplayName()).applyTextStyle(TextFormatting.YELLOW));
+                    serverWorld.getServer().getPlayerList().func_232641_a_(new TranslationTextComponent("message.sleeping_bags.sleep", event.player.getDisplayName()).func_240699_a_(TextFormatting.YELLOW), ChatType.SYSTEM, Util.field_240973_b_);
                 }
             }
         }

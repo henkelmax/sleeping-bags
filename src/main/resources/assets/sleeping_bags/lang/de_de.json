@@ -15,7 +15,7 @@
   "item.sleeping_bags.green_sleeping_bag": "Grüner Schlafsack",
   "item.sleeping_bags.red_sleeping_bag": "Roter Schlafsack",
   "item.sleeping_bags.black_sleeping_bag": "Schwarzer Schlafsack",
-  "message.cant_sleep_here": "Du kannst hier nicht schlafen",
-  "message.cant_sleep_in_air": "Du kannst nur schlafen wenn deine Füße den Boden berühren",
-  "message.sleep": "%s ging zu Bett"
+  "message.sleeping_bags.cant_sleep_here": "Du kannst hier nicht schlafen",
+  "message.sleeping_bags.cant_sleep_in_air": "Du kannst nur schlafen wenn deine Füße den Boden berühren",
+  "message.sleeping_bags.sleep": "%s ging zu Bett"
 }

@@ -30,16 +30,38 @@ minecraft {
 
     runs {
         client {
+            Random rnd = new Random()
             workingDirectory project.file('run').canonicalPath
             property 'forge.logging.console.level', 'debug'
-            args = ['--username', 'henkelmax']
+            args = ['--username', 'henkelmax' + rnd.nextInt(1000)]
             source sourceSets.main
-        }
 
+            mods {
+                mod_id {
+                    source sourceSets.main
+                }
+            }
+        }
         server {
             workingDirectory project.file('run/server').canonicalPath
             property 'forge.logging.console.level', 'debug'
             source sourceSets.main
+            mods {
+                mod_id {
+                    source sourceSets.main
+                }
+            }
+        }
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                mod_id {
+                    source sourceSets.main
+                }
+            }
         }
     }
 }
@@ -139,3 +161,5 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
+
+jar.finalizedBy('reobfJar')
