@@ -54,7 +54,7 @@ public class ItemSleepingBag extends Item {
         }
 
         trySleep((ServerPlayerEntity) playerIn).ifLeft((sleepResult) -> {
-            if (sleepResult != null) {
+            if (sleepResult != null && sleepResult.getMessage() != null) {
                 playerIn.sendStatusMessage(sleepResult.getMessage(), true);
             }
         });
