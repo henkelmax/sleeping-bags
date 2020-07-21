@@ -123,4 +123,5 @@ public class ItemSleepingBag extends Item {
         ((ServerWorld) player.world).updateAllPlayersSleepingFlag();
         return Either.right(Unit.INSTANCE);
     }
+
 }

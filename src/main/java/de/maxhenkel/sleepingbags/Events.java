@@ -19,7 +19,7 @@ public class Events {
 
     @SubscribeEvent
     public void sleepTick(TickEvent.PlayerTickEvent event) {
-        if (!Config.SERVER.ONE_PLAYER_SLEEP.get()) {
+        if (!Main.SERVER_CONFIG.onePlayerSleep.get()) {
             return;
         }
         if (event.player.world instanceof ServerWorld) {
@@ -55,6 +55,5 @@ public class Events {
             }
         }
     }
-
 
 }
