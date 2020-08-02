@@ -4,7 +4,6 @@ import de.maxhenkel.corelib.CommonRegistry;
 import de.maxhenkel.sleepingbags.items.ModItems;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -23,7 +22,7 @@ public class Main {
     public static ServerConfig SERVER_CONFIG;
 
     public Main() {
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, event -> ModItems.registerItems((RegistryEvent.Register<Item>) event));
+        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, ModItems::registerItems);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
 
         SERVER_CONFIG = CommonRegistry.registerConfig(ModConfig.Type.SERVER, ServerConfig.class);

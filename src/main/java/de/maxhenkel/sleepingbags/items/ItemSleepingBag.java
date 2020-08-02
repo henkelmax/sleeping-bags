@@ -98,8 +98,8 @@ public class ItemSleepingBag extends Item {
         }
 
         try {
-            Method setPose1 = ObfuscationReflectionHelper.findMethod(Entity.class, "setPose", Pose.class);
-            setPose1.invoke(player, Pose.SLEEPING);
+            Method setPose = ObfuscationReflectionHelper.findMethod(Entity.class, "func_213301_b", Pose.class);
+            setPose.invoke(player, Pose.SLEEPING);
         } catch (Exception e) {
         }
         player.setBedPosition(player.func_233580_cy_());
@@ -108,7 +108,7 @@ public class ItemSleepingBag extends Item {
 
         //player.sleepTimer = 0;
         try {
-            ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "sleepTimer");
+            ObfuscationReflectionHelper.setPrivateValue(PlayerEntity.class, player, 0, "field_71076_b");
         } catch (ObfuscationReflectionHelper.UnableToFindFieldException e) {
         }
 
