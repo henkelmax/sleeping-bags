@@ -1,1 +1,1 @@
-- Added chinese translation
+- Updated pack format
