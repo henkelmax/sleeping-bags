@@ -28,7 +28,7 @@ public class Events {
                 if (event.player.getSleepTimer() >= 100) {
                     if (serverWorld.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)) {
                         long l = serverWorld.getDayTime() + 24000L;
-                        serverWorld.func_241114_a_(l - l % 24000L);
+                        serverWorld.setDayTime(l - l % 24000L);
                     }
 
                     serverWorld.getPlayers().stream().filter(LivingEntity::isSleeping).forEach(PlayerEntity::wakeUp);
@@ -37,7 +37,7 @@ public class Events {
                         //serverWorld.getDimension().resetRainAndThunder();
                     }
 
-                    serverWorld.getServer().getPlayerList().func_232641_a_(new TranslationTextComponent("message.sleeping_bags.sleep", event.player.getDisplayName()).func_240699_a_(TextFormatting.YELLOW), ChatType.SYSTEM, Util.field_240973_b_);
+                    serverWorld.getServer().getPlayerList().func_232641_a_(new TranslationTextComponent("message.sleeping_bags.sleep", event.player.getDisplayName()).mergeStyle(TextFormatting.YELLOW), ChatType.SYSTEM, Util.DUMMY_UUID);
                 }
             }
         }

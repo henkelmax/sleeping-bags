@@ -34,7 +34,7 @@ public class ItemSleepingBag extends Item {
 
     public ItemSleepingBag(DyeColor dyeColor) {
         super(new Properties().group(ItemGroup.MISC).maxStackSize(1));
-        setRegistryName(new ResourceLocation(Main.MODID, dyeColor.func_176610_l() + "_sleeping_bag"));
+        setRegistryName(new ResourceLocation(Main.MODID, dyeColor.getTranslationKey() + "_sleeping_bag"));
     }
 
     @Override
@@ -43,12 +43,12 @@ public class ItemSleepingBag extends Item {
             return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
         }
 
-        if (!BedBlock.func_235330_a_(worldIn)) {
+        if (!BedBlock.doesBedWork(worldIn)) {
             playerIn.sendStatusMessage(new TranslationTextComponent("message.sleeping_bags.cant_sleep_here"), true);
             return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
         }
 
-        if (!playerIn.func_233570_aj_()) {
+        if (!playerIn.isOnGround()) {
             playerIn.sendStatusMessage(new TranslationTextComponent("message.sleeping_bags.cant_sleep_in_air"), true);
             return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
         }
@@ -72,7 +72,7 @@ public class ItemSleepingBag extends Item {
             return Either.left(PlayerEntity.SleepResult.OTHER_PROBLEM);
         }
 
-        if (!player.world.func_230315_m_().func_236043_f_()) {
+        if (!player.world.getDimensionType().isNatural()) {
             return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_HERE);
         }
         if (player.world.isDaytime()) {
@@ -102,7 +102,7 @@ public class ItemSleepingBag extends Item {
             setPose.invoke(player, Pose.SLEEPING);
         } catch (Exception e) {
         }
-        player.setBedPosition(player.func_233580_cy_());
+        player.setBedPosition(player.getPosition());
         player.setMotion(Vector3d.ZERO);
         player.isAirBorne = true;
 
