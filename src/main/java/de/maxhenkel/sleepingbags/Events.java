@@ -14,8 +14,13 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
+import java.lang.reflect.Method;
 
 public class Events {
+
+    public static final Method RESET_RAIN_AND_THUNDER = ObfuscationReflectionHelper.findMethod(ServerWorld.class, "func_73051_P");
 
     @SubscribeEvent
     public void sleepTick(TickEvent.PlayerTickEvent event) {
@@ -33,8 +38,11 @@ public class Events {
 
                     serverWorld.getPlayers().stream().filter(LivingEntity::isSleeping).forEach(PlayerEntity::wakeUp);
                     if (serverWorld.getGameRules().getBoolean(GameRules.DO_WEATHER_CYCLE)) {
-                        serverWorld.func_241113_a_(6000, 0, false, false);
-                        //serverWorld.getDimension().resetRainAndThunder();
+                        try {
+                            RESET_RAIN_AND_THUNDER.invoke(serverWorld);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     serverWorld.getServer().getPlayerList().func_232641_a_(new TranslationTextComponent("message.sleeping_bags.sleep", event.player.getDisplayName()).mergeStyle(TextFormatting.YELLOW), ChatType.SYSTEM, Util.DUMMY_UUID);
