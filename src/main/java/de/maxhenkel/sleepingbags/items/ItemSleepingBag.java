@@ -33,33 +33,33 @@ import java.util.Optional;
 public class ItemSleepingBag extends Item {
 
     public ItemSleepingBag(DyeColor dyeColor) {
-        super(new Properties().group(ItemGroup.MISC).maxStackSize(1));
-        setRegistryName(new ResourceLocation(Main.MODID, dyeColor.getTranslationKey() + "_sleeping_bag"));
+        super(new Properties().tab(ItemGroup.TAB_MISC).stacksTo(1));
+        setRegistryName(new ResourceLocation(Main.MODID, dyeColor.getName() + "_sleeping_bag"));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (worldIn.isRemote) {
-            return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if (worldIn.isClientSide) {
+            return ActionResult.success(playerIn.getItemInHand(handIn));
         }
 
-        if (!BedBlock.doesBedWork(worldIn)) {
-            playerIn.sendStatusMessage(new TranslationTextComponent("message.sleeping_bags.cant_sleep_here"), true);
-            return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+        if (!BedBlock.canSetSpawn(worldIn)) {
+            playerIn.displayClientMessage(new TranslationTextComponent("message.sleeping_bags.cant_sleep_here"), true);
+            return ActionResult.success(playerIn.getItemInHand(handIn));
         }
 
         if (!playerIn.isOnGround()) {
-            playerIn.sendStatusMessage(new TranslationTextComponent("message.sleeping_bags.cant_sleep_in_air"), true);
-            return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+            playerIn.displayClientMessage(new TranslationTextComponent("message.sleeping_bags.cant_sleep_in_air"), true);
+            return ActionResult.success(playerIn.getItemInHand(handIn));
         }
 
         trySleep((ServerPlayerEntity) playerIn).ifLeft((sleepResult) -> {
             if (sleepResult != null && sleepResult.getMessage() != null) {
-                playerIn.sendStatusMessage(sleepResult.getMessage(), true);
+                playerIn.displayClientMessage(sleepResult.getMessage(), true);
             }
         });
 
-        return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+        return ActionResult.success(playerIn.getItemInHand(handIn));
     }
 
     public Either<PlayerEntity.SleepResult, Unit> trySleep(ServerPlayerEntity player) {
@@ -72,10 +72,10 @@ public class ItemSleepingBag extends Item {
             return Either.left(PlayerEntity.SleepResult.OTHER_PROBLEM);
         }
 
-        if (!player.world.getDimensionType().isNatural()) {
+        if (!player.level.dimensionType().natural()) {
             return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_HERE);
         }
-        if (player.world.isDaytime()) {
+        if (player.level.isDay()) {
             return Either.left(PlayerEntity.SleepResult.NOT_POSSIBLE_NOW);
         }
 
@@ -84,15 +84,15 @@ public class ItemSleepingBag extends Item {
         }
 
         if (!player.isCreative()) {
-            Vector3d vector3d = player.getPositionVec();
-            List<MonsterEntity> list = player.world.getEntitiesWithinAABB(MonsterEntity.class, new AxisAlignedBB(vector3d.getX() - 8D, vector3d.getY() - 5D, vector3d.getZ() - 8D, vector3d.getX() + 8D, vector3d.getY() + 5D, vector3d.getZ() + 8D), (entity) -> entity.func_230292_f_(player));
+            Vector3d vector3d = player.position();
+            List<MonsterEntity> list = player.level.getEntitiesOfClass(MonsterEntity.class, new AxisAlignedBB(vector3d.x() - 8D, vector3d.y() - 5D, vector3d.z() - 8D, vector3d.x() + 8D, vector3d.y() + 5D, vector3d.z() + 8D), (entity) -> entity.isPreventingPlayerRest(player));
             if (!list.isEmpty()) {
                 return Either.left(PlayerEntity.SleepResult.NOT_SAFE);
             }
         }
 
         //player.startSleeping(at);
-        player.takeStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
+        player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
         if (player.isPassenger()) {
             player.stopRiding();
         }
@@ -102,9 +102,9 @@ public class ItemSleepingBag extends Item {
             setPose.invoke(player, Pose.SLEEPING);
         } catch (Exception e) {
         }
-        player.setBedPosition(player.getPosition());
-        player.setMotion(Vector3d.ZERO);
-        player.isAirBorne = true;
+        player.setSleepingPos(player.blockPosition());
+        player.setDeltaMovement(Vector3d.ZERO);
+        player.hasImpulse = true;
 
         //player.sleepTimer = 0;
         try {
@@ -112,15 +112,15 @@ public class ItemSleepingBag extends Item {
         } catch (ObfuscationReflectionHelper.UnableToFindFieldException e) {
         }
 
-        if (player.world instanceof ServerWorld) {
-            ((ServerWorld) player.world).updateAllPlayersSleepingFlag();
+        if (player.level instanceof ServerWorld) {
+            ((ServerWorld) player.level).updateSleepingPlayerList();
         }
 
 
-        player.addStat(Stats.SLEEP_IN_BED);
+        player.awardStat(Stats.SLEEP_IN_BED);
         CriteriaTriggers.SLEPT_IN_BED.trigger(player);
 
-        ((ServerWorld) player.world).updateAllPlayersSleepingFlag();
+        ((ServerWorld) player.level).updateSleepingPlayerList();
         return Either.right(Unit.INSTANCE);
     }
 

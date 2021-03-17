@@ -1,1 +1,1 @@
-- Fixed thunderstorm issue
+- Updated to official mappings

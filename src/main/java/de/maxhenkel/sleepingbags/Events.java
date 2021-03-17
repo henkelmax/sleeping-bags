@@ -27,17 +27,17 @@ public class Events {
         if (!Main.SERVER_CONFIG.onePlayerSleep.get()) {
             return;
         }
-        if (event.player.world instanceof ServerWorld) {
-            ServerWorld serverWorld = (ServerWorld) event.player.world;
+        if (event.player.level instanceof ServerWorld) {
+            ServerWorld serverWorld = (ServerWorld) event.player.level;
             if (event.player.isSleeping()) {
                 if (event.player.getSleepTimer() >= 100) {
-                    if (serverWorld.getGameRules().getBoolean(GameRules.DO_DAYLIGHT_CYCLE)) {
+                    if (serverWorld.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT)) {
                         long l = serverWorld.getDayTime() + 24000L;
                         serverWorld.setDayTime(l - l % 24000L);
                     }
 
-                    serverWorld.getPlayers().stream().filter(LivingEntity::isSleeping).forEach(PlayerEntity::wakeUp);
-                    if (serverWorld.getGameRules().getBoolean(GameRules.DO_WEATHER_CYCLE)) {
+                    serverWorld.players().stream().filter(LivingEntity::isSleeping).forEach(PlayerEntity::stopSleeping);
+                    if (serverWorld.getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE)) {
                         try {
                             RESET_RAIN_AND_THUNDER.invoke(serverWorld);
                         } catch (Exception e) {
@@ -45,7 +45,7 @@ public class Events {
                         }
                     }
 
-                    serverWorld.getServer().getPlayerList().func_232641_a_(new TranslationTextComponent("message.sleeping_bags.sleep", event.player.getDisplayName()).mergeStyle(TextFormatting.YELLOW), ChatType.SYSTEM, Util.DUMMY_UUID);
+                    serverWorld.getServer().getPlayerList().broadcastMessage(new TranslationTextComponent("message.sleeping_bags.sleep", event.player.getDisplayName()).withStyle(TextFormatting.YELLOW), ChatType.SYSTEM, Util.NIL_UUID);
                 }
             }
         }
@@ -56,7 +56,7 @@ public class Events {
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
             for (Hand hand : Hand.values()) {
-                if (playerEntity.getHeldItem(hand).getItem() instanceof ItemSleepingBag) {
+                if (playerEntity.getItemInHand(hand).getItem() instanceof ItemSleepingBag) {
                     event.setResult(Event.Result.ALLOW);
                     return;
                 }
