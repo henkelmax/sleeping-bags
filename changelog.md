@@ -1,1 +1,1 @@
-- Updated to official mappings
+- Added russian translation
