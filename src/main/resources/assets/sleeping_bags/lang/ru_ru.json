@@ -1,0 +1,21 @@
+{
+  "item.sleeping_bags.white_sleeping_bag": "Белый спальный мешок",
+  "item.sleeping_bags.orange_sleeping_bag": "Оранжевый спальный мешок",
+  "item.sleeping_bags.magenta_sleeping_bag": "Пурпурный спальный мешок",
+  "item.sleeping_bags.light_blue_sleeping_bag": "Голубой спальный мешок",
+  "item.sleeping_bags.yellow_sleeping_bag": "Желтый спальный мешок",
+  "item.sleeping_bags.lime_sleeping_bag": "Лаймовый спальный мешок",
+  "item.sleeping_bags.pink_sleeping_bag": "Розовый спальный мешок",
+  "item.sleeping_bags.gray_sleeping_bag": "Серый спальный мешок",
+  "item.sleeping_bags.light_gray_sleeping_bag": "Светло-серый спальный мешок",
+  "item.sleeping_bags.cyan_sleeping_bag": "Бирюзовый спальный мешок",
+  "item.sleeping_bags.purple_sleeping_bag": "Фиолетовый спальный мешок",
+  "item.sleeping_bags.blue_sleeping_bag": "Синий спальный мешок",
+  "item.sleeping_bags.brown_sleeping_bag": "Коричневый спальный мешок",
+  "item.sleeping_bags.green_sleeping_bag": "Зеленый спальный мешок",
+  "item.sleeping_bags.red_sleeping_bag": "Красный спальный мешок",
+  "item.sleeping_bags.black_sleeping_bag": "Черный спальный мешок",
+  "message.sleeping_bags.cant_sleep_here": "Вы не можете спать здесь",
+  "message.sleeping_bags.cant_sleep_in_air": "Вы можете спать только тогда, когда ваши ноги касаются земли",
+  "message.sleeping_bags.sleep": "%s лег в кровать"
+}
