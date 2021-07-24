@@ -1,7 +1,7 @@
 package de.maxhenkel.sleepingbags.items;
 
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 
 public class ModItems {
