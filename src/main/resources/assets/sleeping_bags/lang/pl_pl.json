@@ -1,0 +1,20 @@
+{
+    "item.sleeping_bags.white_sleeping_bag": "Biały śpiwór",
+    "item.sleeping_bags.orange_sleeping_bag": "Pomarańczowy śpiwór",
+    "item.sleeping_bags.magenta_sleeping_bag": "Purpurowy śpiwór",
+    "item.sleeping_bags.light_blue_sleeping_bag": "Jasnoniebieski śpiwór",
+    "item.sleeping_bags.yellow_sleeping_bag": "Żółty śpiwór",
+    "item.sleeping_bags.lime_sleeping_bag": "Limonkowy śpiwór",
+    "item.sleeping_bags.pink_sleeping_bag": "Różowy śpiwór",
+    "item.sleeping_bags.gray_sleeping_bag": "Szary śpiwór",
+    "item.sleeping_bags.light_gray_sleeping_bag": "Jasnoszary śpiwór",
+    "item.sleeping_bags.cyan_sleeping_bag": "Morski śpiwór",
+    "item.sleeping_bags.purple_sleeping_bag": "Fioletowy śpiwór",
+    "item.sleeping_bags.blue_sleeping_bag": "Niebieski śpiwór",
+    "item.sleeping_bags.brown_sleeping_bag": "Brązowy śpiwór",
+    "item.sleeping_bags.green_sleeping_bag": "Zielony śpiwór",
+    "item.sleeping_bags.red_sleeping_bag": "Czerwony śpiwór",
+    "item.sleeping_bags.black_sleeping_bag": "Czarny śpiwór",
+    "message.sleeping_bags.cant_sleep_here": "Nie możesz spać w tym miejscu",
+    "message.sleeping_bags.cant_sleep_in_air": "Możesz spać tylko wtedy, gdy stoisz na ziemi"
+  }
