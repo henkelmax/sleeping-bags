@@ -1,10 +1,8 @@
 package de.maxhenkel.sleepingbags.items;
 
 import com.mojang.datafixers.util.Either;
-import de.maxhenkel.sleepingbags.Main;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -29,9 +27,11 @@ import java.util.Optional;
 
 public class ItemSleepingBag extends Item {
 
+    protected DyeColor dyeColor;
+
     public ItemSleepingBag(DyeColor dyeColor) {
         super(new Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1));
-        setRegistryName(new ResourceLocation(Main.MODID, dyeColor.getName() + "_sleeping_bag"));
+        this.dyeColor = dyeColor;
     }
 
     @Override
@@ -41,12 +41,12 @@ public class ItemSleepingBag extends Item {
         }
 
         if (!BedBlock.canSetSpawn(worldIn)) {
-            playerIn.displayClientMessage(new TranslatableComponent("message.sleeping_bags.cant_sleep_here"), true);
+            playerIn.displayClientMessage(Component.translatable("message.sleeping_bags.cant_sleep_here"), true);
             return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
         }
 
         if (!playerIn.isOnGround()) {
-            playerIn.displayClientMessage(new TranslatableComponent("message.sleeping_bags.cant_sleep_in_air"), true);
+            playerIn.displayClientMessage(Component.translatable("message.sleeping_bags.cant_sleep_in_air"), true);
             return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
         }
 

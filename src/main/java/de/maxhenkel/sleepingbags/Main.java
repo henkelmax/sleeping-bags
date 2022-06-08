@@ -2,7 +2,6 @@ package de.maxhenkel.sleepingbags;
 
 import de.maxhenkel.corelib.CommonRegistry;
 import de.maxhenkel.sleepingbags.items.ModItems;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,10 +21,11 @@ public class Main {
     public static ServerConfig SERVER_CONFIG;
 
     public Main() {
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, ModItems::registerItems);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
 
         SERVER_CONFIG = CommonRegistry.registerConfig(ModConfig.Type.SERVER, ServerConfig.class);
+
+        ModItems.init();
     }
 
     @SubscribeEvent
