@@ -11,10 +11,9 @@ public class Events {
 
     @SubscribeEvent
     public void sleepCheck(SleepingLocationCheckEvent event) {
-        if (event.getEntityLiving() instanceof Player) {
-            Player playerEntity = (Player) event.getEntityLiving();
+        if (event.getEntity() instanceof Player player) {
             for (InteractionHand hand : InteractionHand.values()) {
-                if (playerEntity.getItemInHand(hand).getItem() instanceof ItemSleepingBag) {
+                if (player.getItemInHand(hand).getItem() instanceof ItemSleepingBag) {
                     event.setResult(Event.Result.ALLOW);
                     return;
                 }
