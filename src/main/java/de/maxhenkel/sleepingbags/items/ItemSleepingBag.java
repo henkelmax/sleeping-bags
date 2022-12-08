@@ -29,7 +29,7 @@ public class ItemSleepingBag extends Item {
     protected DyeColor dyeColor;
 
     public ItemSleepingBag(DyeColor dyeColor) {
-        super(new Properties()/*.tab(CreativeModeTab.TAB_MISC)*/.stacksTo(1)); // TODO Fix creative tab
+        super(new Properties().stacksTo(1));
         this.dyeColor = dyeColor;
     }
 
