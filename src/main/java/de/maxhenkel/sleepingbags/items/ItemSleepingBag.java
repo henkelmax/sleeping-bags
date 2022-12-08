@@ -12,7 +12,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +29,7 @@ public class ItemSleepingBag extends Item {
     protected DyeColor dyeColor;
 
     public ItemSleepingBag(DyeColor dyeColor) {
-        super(new Properties().tab(CreativeModeTab.TAB_MISC).stacksTo(1));
+        super(new Properties()/*.tab(CreativeModeTab.TAB_MISC)*/.stacksTo(1)); // TODO Fix creative tab
         this.dyeColor = dyeColor;
     }
 
