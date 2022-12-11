@@ -29,11 +29,9 @@ public class Events {
     @SubscribeEvent
     public static void onCreativeModeTabBuildContents(CreativeModeTabEvent.BuildContents event) {
         if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            event.register((flags, builder, hasPermissions) -> {
-                for (RegistryObject<ItemSleepingBag> sleepingBag : ModItems.SLEEPING_BAGS) {
-                    builder.accept(new ItemStack(sleepingBag.get()));
-                }
-            });
+            for (RegistryObject<ItemSleepingBag> sleepingBag : ModItems.SLEEPING_BAGS) {
+                event.accept(new ItemStack(sleepingBag.get()));
+            }
         }
     }
 
