@@ -1,0 +1,20 @@
+{
+  "item.sleeping_bags.white_sleeping_bag": "Білий спальний мішок",
+  "item.sleeping_bags.orange_sleeping_bag": "Помаранчевий спальний мішок",
+  "item.sleeping_bags.magenta_sleeping_bag": "Пурпурний спальний мішок",
+  "item.sleeping_bags.light_blue_sleeping_bag": "Блакитний спальний мішок",
+  "item.sleeping_bags.yellow_sleeping_bag": "Жовтий спальний мішок",
+  "item.sleeping_bags.lime_sleeping_bag": "Лаймовий спальний мішок",
+  "item.sleeping_bags.pink_sleeping_bag": "Рожевий спальний мішок",
+  "item.sleeping_bags.gray_sleeping_bag": "Сірий спальний мішок",
+  "item.sleeping_bags.light_gray_sleeping_bag": "Світло-сірий спальний мішок",
+  "item.sleeping_bags.cyan_sleeping_bag": "Бірюзовий спальний мішок",
+  "item.sleeping_bags.purple_sleeping_bag": "Фіолетовий спальний мішок",
+  "item.sleeping_bags.blue_sleeping_bag": "Синій спальний мішок",
+  "item.sleeping_bags.brown_sleeping_bag": "Коричневий спальний мішок",
+  "item.sleeping_bags.green_sleeping_bag": "Зелений спальний мішок",
+  "item.sleeping_bags.red_sleeping_bag": "Червоний спальний мішок",
+  "item.sleeping_bags.black_sleeping_bag": "Чорний спальний мішок",
+  "message.sleeping_bags.cant_sleep_here": "Ви не можете тут поспати",
+  "message.sleeping_bags.cant_sleep_in_air": "Ви можете спати лише тоді, коли ваші ноги торкаються землі"
+}
