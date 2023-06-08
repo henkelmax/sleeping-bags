@@ -44,7 +44,7 @@ public class ItemSleepingBag extends Item {
             return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
         }
 
-        if (!playerIn.isOnGround()) {
+        if (!playerIn.onGround()) {
             playerIn.displayClientMessage(Component.translatable("message.sleeping_bags.cant_sleep_in_air"), true);
             return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
         }
@@ -68,10 +68,10 @@ public class ItemSleepingBag extends Item {
             return Either.left(Player.BedSleepingProblem.OTHER_PROBLEM);
         }
 
-        if (!player.level.dimensionType().natural()) {
+        if (!player.level().dimensionType().natural()) {
             return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_HERE);
         }
-        if (player.level.isDay()) {
+        if (player.level().isDay()) {
             return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
         }
 
@@ -81,7 +81,7 @@ public class ItemSleepingBag extends Item {
 
         if (!player.isCreative()) {
             Vec3 vector3d = player.position();
-            List<Monster> list = player.level.getEntitiesOfClass(Monster.class, new AABB(vector3d.x() - 8D, vector3d.y() - 5D, vector3d.z() - 8D, vector3d.x() + 8D, vector3d.y() + 5D, vector3d.z() + 8D), (entity) -> entity.isPreventingPlayerRest(player));
+            List<Monster> list = player.level().getEntitiesOfClass(Monster.class, new AABB(vector3d.x() - 8D, vector3d.y() - 5D, vector3d.z() - 8D, vector3d.x() + 8D, vector3d.y() + 5D, vector3d.z() + 8D), (entity) -> entity.isPreventingPlayerRest(player));
             if (!list.isEmpty()) {
                 return Either.left(Player.BedSleepingProblem.NOT_SAFE);
             }
@@ -101,7 +101,7 @@ public class ItemSleepingBag extends Item {
         player.awardStat(Stats.SLEEP_IN_BED);
         CriteriaTriggers.SLEPT_IN_BED.trigger(player);
 
-        ((ServerLevel) player.level).updateSleepingPlayerList();
+        ((ServerLevel) player.level()).updateSleepingPlayerList();
         return Either.right(Unit.INSTANCE);
     }
 
