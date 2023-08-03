@@ -1,8 +1,10 @@
 <!-- modrinth_exclude.start -->
 
-# Sleeping Bags ![](http://cf.way2muchnoise.eu/full_384485_downloads.svg) ![](http://cf.way2muchnoise.eu/versions/384485.svg)
+# Sleeping Bags
 
 ## Links
+
+- [Modrinth](https://modrinth.com/mod/sleeping-bags)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/sleeping-bags)
 - [Credits](https://modrepo.de/minecraft/sleeping_bags/credits)
 
