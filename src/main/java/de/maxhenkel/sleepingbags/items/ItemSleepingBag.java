@@ -75,7 +75,7 @@ public class ItemSleepingBag extends Item {
             return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
         }
 
-        if (!ForgeEventFactory.fireSleepingTimeCheck(player, Optional.empty())) {
+        if (!ForgeEventFactory.onSleepingTimeCheck(player, Optional.empty())) {
             return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
         }
 
