@@ -19,8 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
-
+import net.neoforged.neoforge.event.EventHooks;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +58,7 @@ public class ItemSleepingBag extends Item {
     }
 
     public Either<Player.BedSleepingProblem, Unit> trySleep(ServerPlayer player) {
-        Player.BedSleepingProblem ret = net.minecraftforge.event.ForgeEventFactory.onPlayerSleepInBed(player, Optional.empty());
+        Player.BedSleepingProblem ret = net.neoforged.neoforge.event.EventHooks.onPlayerSleepInBed(player, Optional.empty());
         if (ret != null) {
             return Either.left(ret);
         }
@@ -75,7 +74,7 @@ public class ItemSleepingBag extends Item {
             return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
         }
 
-        if (!ForgeEventFactory.onSleepingTimeCheck(player, Optional.empty())) {
+        if (!EventHooks.fireSleepingTimeCheck(player, Optional.empty())) {
             return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
         }
 

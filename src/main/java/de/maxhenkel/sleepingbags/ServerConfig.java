@@ -1,11 +1,11 @@
 package de.maxhenkel.sleepingbags;
 
 import de.maxhenkel.corelib.config.ConfigBase;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ServerConfig extends ConfigBase {
 
-    public ServerConfig(ForgeConfigSpec.Builder builder) {
+    public ServerConfig(ModConfigSpec.Builder builder) {
         super(builder);
     }
 
