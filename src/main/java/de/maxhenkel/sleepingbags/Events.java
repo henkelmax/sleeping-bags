@@ -5,12 +5,13 @@ import de.maxhenkel.sleepingbags.items.ModItems;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.player.SleepingLocationCheckEvent;
-import net.neoforged.neoforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class Events {
 
@@ -28,7 +29,7 @@ public class Events {
 
     public static void onCreativeModeTabBuildContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey().equals(CreativeModeTabs.TOOLS_AND_UTILITIES)) {
-            for (RegistryObject<ItemSleepingBag> sleepingBag : ModItems.SLEEPING_BAGS) {
+            for (DeferredHolder<Item, ItemSleepingBag> sleepingBag : ModItems.SLEEPING_BAGS) {
                 event.accept(new ItemStack(sleepingBag.get()));
             }
         }
