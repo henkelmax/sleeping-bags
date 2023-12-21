@@ -8,6 +8,7 @@ version="${mod_version}"
 displayName="Sleeping Bags"
 updateJSONURL="https://update.maxhenkel.de/forge/sleeping_bags"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/sleeping-bags"
+logoFile = "icon.png"
 authors="Max Henkel"
 description='''Sleeping bags'''
 [[dependencies.sleeping_bags]]
