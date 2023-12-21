@@ -1,22 +1,22 @@
 modLoader="javafml"
-loaderVersion="${loader_version}"
+loaderVersion="*"
 license="All rights reserved"
 issueTrackerURL="https://github.com/henkelmax/sleeping-bags/issues"
 [[mods]]
-modId="${mod_id}"
+modId="sleeping_bags"
 version="${mod_version}"
-displayName="${mod_name}"
+displayName="Sleeping Bags"
 updateJSONURL="https://update.maxhenkel.de/neoforge/sleeping_bags"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/sleeping-bags"
-authors="${mod_vendor}"
+authors="Max Henkel"
 description='''Sleeping bags'''
-[[dependencies.${mod_id}]]
+[[dependencies.sleeping_bags]]
     modId="neoforge"
     mandatory=true
-    versionRange="${neoforge_version_range}"
+    versionRange="${neoforge_dependency}"
     ordering="NONE"
     side="BOTH"
-[[dependencies.${mod_id}]]
+[[dependencies.sleeping_bags]]
     modId="minecraft"
     mandatory=true
     versionRange="[${minecraft_version}]"
