@@ -1,0 +1,20 @@
+{
+  "item.sleeping_bags.white_sleeping_bag": "Bolsa de dormir blanca",
+  "item.sleeping_bags.orange_sleeping_bag": "Bolsa de dormir naranja",
+  "item.sleeping_bags.magenta_sleeping_bag": "Bolsa de dormir magenta",
+  "item.sleeping_bags.light_blue_sleeping_bag": "Bolsa de dormir azul claro",
+  "item.sleeping_bags.yellow_sleeping_bag": "Bolsa de dormir amarilla",
+  "item.sleeping_bags.lime_sleeping_bag": "Bolsa de dormir verde lima",
+  "item.sleeping_bags.pink_sleeping_bag": "Bolsa de dormir rosa",
+  "item.sleeping_bags.gray_sleeping_bag": "Bolsa de dormir gris",
+  "item.sleeping_bags.light_gray_sleeping_bag": "Bolsa de dormir gris claro",
+  "item.sleeping_bags.cyan_sleeping_bag": "Bolsa de dormir turquesa",
+  "item.sleeping_bags.purple_sleeping_bag": "Bolsa de dormir morada",
+  "item.sleeping_bags.blue_sleeping_bag": "Bolsa de dormir azul",
+  "item.sleeping_bags.brown_sleeping_bag": "Bolsa de dormir café",
+  "item.sleeping_bags.green_sleeping_bag": "Bolsa de dormir verde",
+  "item.sleeping_bags.red_sleeping_bag": "Bolsa de dormir roja",
+  "item.sleeping_bags.black_sleeping_bag": "Bolsa de dormir negra",
+  "message.sleeping_bags.cant_sleep_here": "No puedes dormir ahora",
+  "message.sleeping_bags.cant_sleep_in_air": "Solo puedes dormir cuando tus pies tocan el suelo"
+}
