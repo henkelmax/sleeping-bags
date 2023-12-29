@@ -1,1 +1,1 @@
-- Added mod icon
+- Added Mexican Spanish translation
