@@ -2,10 +2,10 @@ package de.maxhenkel.sleepingbags;
 
 import de.maxhenkel.corelib.CommonRegistry;
 import de.maxhenkel.sleepingbags.items.ModItems;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,13 +19,13 @@ public class Main {
 
     public static ServerConfig SERVER_CONFIG;
 
-    public Main() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(Events::onCreativeModeTabBuildContents);
+    public Main(IEventBus eventBus) {
+        eventBus.addListener(this::commonSetup);
+        eventBus.addListener(Events::onCreativeModeTabBuildContents);
 
         SERVER_CONFIG = CommonRegistry.registerConfig(ModConfig.Type.SERVER, ServerConfig.class);
 
-        ModItems.init();
+        ModItems.init(eventBus);
     }
 
     public void commonSetup(FMLCommonSetupEvent event) {
