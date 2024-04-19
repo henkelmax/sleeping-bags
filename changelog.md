@@ -1,1 +1,1 @@
-- Updated NeoForge
+- Added Japanese translation
