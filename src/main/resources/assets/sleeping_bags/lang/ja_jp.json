@@ -1,0 +1,20 @@
+{
+    "item.sleeping_bags.white_sleeping_bag": "白色の寝袋",
+    "item.sleeping_bags.orange_sleeping_bag": "橙色の寝袋",
+    "item.sleeping_bags.magenta_sleeping_bag": "赤紫色の寝袋",
+    "item.sleeping_bags.light_blue_sleeping_bag": "空色の寝袋",
+    "item.sleeping_bags.yellow_sleeping_bag": "黄色の寝袋",
+    "item.sleeping_bags.lime_sleeping_bag": "黄緑色の寝袋",
+    "item.sleeping_bags.pink_sleeping_bag": "桃色の寝袋",
+    "item.sleeping_bags.gray_sleeping_bag": "灰色の寝袋",
+    "item.sleeping_bags.light_gray_sleeping_bag": "薄灰色の寝袋",
+    "item.sleeping_bags.cyan_sleeping_bag": "青緑色の寝袋",
+    "item.sleeping_bags.purple_sleeping_bag": "紫色の寝袋",
+    "item.sleeping_bags.blue_sleeping_bag": "青色の寝袋",
+    "item.sleeping_bags.brown_sleeping_bag": "茶色の寝袋",
+    "item.sleeping_bags.green_sleeping_bag": "緑色の寝袋",
+    "item.sleeping_bags.red_sleeping_bag": "赤色の寝袋",
+    "item.sleeping_bags.black_sleeping_bag": "黒色の寝袋",
+    "message.sleeping_bags.cant_sleep_here": "寝ることができません",
+    "message.sleeping_bags.cant_sleep_in_air": "足が地面に付いているのみ寝ることができます"
+  }
