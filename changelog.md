@@ -1,1 +1,1 @@
-- Added Mexican Spanish translation
+- Added Japanese translation
