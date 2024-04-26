@@ -23,7 +23,7 @@ public class Main {
         eventBus.addListener(this::commonSetup);
         eventBus.addListener(Events::onCreativeModeTabBuildContents);
 
-        SERVER_CONFIG = CommonRegistry.registerConfig(ModConfig.Type.SERVER, ServerConfig.class);
+        SERVER_CONFIG = CommonRegistry.registerConfig(MODID, ModConfig.Type.SERVER, ServerConfig.class);
 
         ModItems.init(eventBus);
     }
