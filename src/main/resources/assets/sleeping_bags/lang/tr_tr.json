@@ -1,0 +1,20 @@
+{
+  "item.sleeping_bags.white_sleeping_bag": "Beyaz Uyku Tulumu",
+  "item.sleeping_bags.orange_sleeping_bag": "Turuncu Uyku Tulumu",
+  "item.sleeping_bags.magenta_sleeping_bag": "Eflatun Uyku Tulumu",
+  "item.sleeping_bags.light_blue_sleeping_bag": "Açık Mavi Uyku Tulumu",
+  "item.sleeping_bags.yellow_sleeping_bag": "Sarı Uyku Tulumu",
+  "item.sleeping_bags.lime_sleeping_bag": "Açık Yeşil Uyku Tulumu",
+  "item.sleeping_bags.pink_sleeping_bag": "Pembe Uyku Tulumu",
+  "item.sleeping_bags.gray_sleeping_bag": "Gri Uyku Tulumu",
+  "item.sleeping_bags.light_gray_sleeping_bag": "Açık Gri Uyku Tulumu",
+  "item.sleeping_bags.cyan_sleeping_bag": "Camgöbeği Uyku Tulumu",
+  "item.sleeping_bags.purple_sleeping_bag": "Mor Uyku Tulumu",
+  "item.sleeping_bags.blue_sleeping_bag": "Mavi Uyku Tulumu",
+  "item.sleeping_bags.brown_sleeping_bag": "Kahverengi Uyku Tulumu",
+  "item.sleeping_bags.green_sleeping_bag": "Yeşil Uyku Tulumu",
+  "item.sleeping_bags.red_sleeping_bag": "Kırmızı Uyku Tulumu",
+  "item.sleeping_bags.black_sleeping_bag": "Siyah Uyku Tulumu",
+  "message.sleeping_bags.cant_sleep_here": "Burada uyuyamazsın",
+  "message.sleeping_bags.cant_sleep_in_air": "Sadece ayakların yere değdiğinde uyuyabilirsin"
+}
