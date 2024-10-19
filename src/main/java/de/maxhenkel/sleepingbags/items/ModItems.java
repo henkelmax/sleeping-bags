@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModItems {
 
-    private static final DeferredRegister<Item> ITEM_REGISTER = DeferredRegister.create(BuiltInRegistries.ITEM, Main.MODID);
+    private static final DeferredRegister.Items ITEM_REGISTER = DeferredRegister.createItems(Main.MODID);
 
     public static final DeferredHolder<Item, ItemSleepingBag>[] SLEEPING_BAGS;
 
@@ -26,7 +26,7 @@ public class ModItems {
     }
 
     private static DeferredHolder<Item, ItemSleepingBag> registerSleepingBag(DyeColor dyeColor) {
-        return ITEM_REGISTER.register(dyeColor.getName() + "_sleeping_bag", () -> new ItemSleepingBag(dyeColor));
+        return ITEM_REGISTER.registerItem(dyeColor.getName() + "_sleeping_bag", p -> new ItemSleepingBag(dyeColor, p));
     }
 
 }

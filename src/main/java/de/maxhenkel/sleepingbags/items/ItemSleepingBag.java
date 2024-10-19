@@ -8,13 +8,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.phys.AABB;
@@ -27,25 +26,25 @@ public class ItemSleepingBag extends Item {
 
     protected DyeColor dyeColor;
 
-    public ItemSleepingBag(DyeColor dyeColor) {
-        super(new Properties().stacksTo(1));
+    public ItemSleepingBag(DyeColor dyeColor, Properties properties) {
+        super(properties.stacksTo(1));
         this.dyeColor = dyeColor;
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (worldIn.isClientSide) {
-            return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
+            return InteractionResult.SUCCESS;
         }
 
         if (!BedBlock.canSetSpawn(worldIn)) {
             playerIn.displayClientMessage(Component.translatable("message.sleeping_bags.cant_sleep_here"), true);
-            return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
+            return InteractionResult.SUCCESS;
         }
 
         if (!playerIn.onGround()) {
             playerIn.displayClientMessage(Component.translatable("message.sleeping_bags.cant_sleep_in_air"), true);
-            return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
+            return InteractionResult.SUCCESS;
         }
 
         trySleep((ServerPlayer) playerIn).ifLeft((sleepResult) -> {
@@ -54,7 +53,7 @@ public class ItemSleepingBag extends Item {
             }
         });
 
-        return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
+        return InteractionResult.SUCCESS;
     }
 
     public Either<Player.BedSleepingProblem, Unit> trySleep(ServerPlayer player) {
@@ -76,7 +75,7 @@ public class ItemSleepingBag extends Item {
 
         if (!player.isCreative()) {
             Vec3 vector3d = player.position();
-            List<Monster> list = player.level().getEntitiesOfClass(Monster.class, new AABB(vector3d.x() - 8D, vector3d.y() - 5D, vector3d.z() - 8D, vector3d.x() + 8D, vector3d.y() + 5D, vector3d.z() + 8D), (entity) -> entity.isPreventingPlayerRest(player));
+            List<Monster> list = player.level().getEntitiesOfClass(Monster.class, new AABB(vector3d.x() - 8D, vector3d.y() - 5D, vector3d.z() - 8D, vector3d.x() + 8D, vector3d.y() + 5D, vector3d.z() + 8D), (entity) -> entity.isPreventingPlayerRest(player.serverLevel(), player));
             if (!list.isEmpty()) {
                 return Either.left(Player.BedSleepingProblem.NOT_SAFE);
             }
