@@ -4,12 +4,8 @@
     "CCW"
   ],
   "key": {
-    "W": {
-      "tag": "minecraft:wool"
-    },
-    "C": {
-      "item": "minecraft:green_carpet"
-    }
+    "W": "#minecraft:wool",
+    "C": "minecraft:green_carpet"
   },
   "result": {
     "id": "sleeping_bags:green_sleeping_bag",
