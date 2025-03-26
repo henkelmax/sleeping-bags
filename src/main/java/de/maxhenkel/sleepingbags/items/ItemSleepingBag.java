@@ -3,7 +3,6 @@ package de.maxhenkel.sleepingbags.items;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Unit;
@@ -69,7 +68,7 @@ public class ItemSleepingBag extends Item {
         if (!player.level().dimensionType().natural()) {
             return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_HERE);
         }
-        if (player.level().isDay()) {
+        if (player.level().isBrightOutside()) {
             return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
         }
 
