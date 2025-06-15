@@ -74,7 +74,7 @@ public class ItemSleepingBag extends Item {
 
         if (!player.isCreative()) {
             Vec3 vector3d = player.position();
-            List<Monster> list = player.level().getEntitiesOfClass(Monster.class, new AABB(vector3d.x() - 8D, vector3d.y() - 5D, vector3d.z() - 8D, vector3d.x() + 8D, vector3d.y() + 5D, vector3d.z() + 8D), (entity) -> entity.isPreventingPlayerRest(player.serverLevel(), player));
+            List<Monster> list = player.level().getEntitiesOfClass(Monster.class, new AABB(vector3d.x() - 8D, vector3d.y() - 5D, vector3d.z() - 8D, vector3d.x() + 8D, vector3d.y() + 5D, vector3d.z() + 8D), (entity) -> entity.isPreventingPlayerRest(player.level(), player));
             if (!list.isEmpty()) {
                 return Either.left(Player.BedSleepingProblem.NOT_SAFE);
             }
@@ -94,7 +94,7 @@ public class ItemSleepingBag extends Item {
         player.awardStat(Stats.SLEEP_IN_BED);
         CriteriaTriggers.SLEPT_IN_BED.trigger(player);
 
-        player.serverLevel().updateSleepingPlayerList();
+        player.level().updateSleepingPlayerList();
         return Either.right(Unit.INSTANCE);
     }
 
