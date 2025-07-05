@@ -1,7 +1,6 @@
 package de.maxhenkel.sleepingbags.items;
 
-import de.maxhenkel.sleepingbags.Main;
-import net.minecraft.core.registries.BuiltInRegistries;
+import de.maxhenkel.sleepingbags.SleepingBagsMod;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
@@ -10,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModItems {
 
-    private static final DeferredRegister.Items ITEM_REGISTER = DeferredRegister.createItems(Main.MODID);
+    private static final DeferredRegister.Items ITEM_REGISTER = DeferredRegister.createItems(SleepingBagsMod.MODID);
 
     public static final DeferredHolder<Item, ItemSleepingBag>[] SLEEPING_BAGS;
 
