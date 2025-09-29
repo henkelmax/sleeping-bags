@@ -32,7 +32,7 @@ public class ItemSleepingBag extends Item {
 
     @Override
     public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        if (worldIn.isClientSide) {
+        if (worldIn.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
 
