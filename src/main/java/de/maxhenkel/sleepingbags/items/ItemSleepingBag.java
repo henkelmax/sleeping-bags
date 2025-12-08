@@ -8,13 +8,14 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.attribute.BedRule;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
@@ -31,13 +32,8 @@ public class ItemSleepingBag extends Item {
     }
 
     @Override
-    public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        if (worldIn.isClientSide()) {
-            return InteractionResult.SUCCESS;
-        }
-
-        if (!BedBlock.canSetSpawn(worldIn)) {
-            playerIn.displayClientMessage(Component.translatable("message.sleeping_bags.cant_sleep_here"), true);
+    public InteractionResult use(Level level, Player playerIn, InteractionHand handIn) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
 
@@ -46,9 +42,15 @@ public class ItemSleepingBag extends Item {
             return InteractionResult.SUCCESS;
         }
 
+        BedRule value = level.environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, playerIn.blockPosition());
+        if (value.canSleep().equals(BedRule.Rule.NEVER)) {
+            playerIn.displayClientMessage(Component.translatable("message.sleeping_bags.cant_sleep_here"), true);
+            return InteractionResult.SUCCESS;
+        }
+
         trySleep((ServerPlayer) playerIn).ifLeft((sleepResult) -> {
-            if (sleepResult != null && sleepResult.getMessage() != null) {
-                playerIn.displayClientMessage(sleepResult.getMessage(), true);
+            if (sleepResult != null && sleepResult.message() != null) {
+                playerIn.displayClientMessage(sleepResult.message(), true);
             }
         });
 
@@ -65,11 +67,10 @@ public class ItemSleepingBag extends Item {
             return Either.left(Player.BedSleepingProblem.OTHER_PROBLEM);
         }
 
-        if (!player.level().dimensionType().natural()) {
-            return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_HERE);
-        }
-        if (player.level().isBrightOutside()) {
-            return Either.left(Player.BedSleepingProblem.NOT_POSSIBLE_NOW);
+        BedRule value = player.level().environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, player.blockPosition());
+
+        if (!value.canSleep(player.level())) {
+            return Either.left(Player.BedSleepingProblem.OTHER_PROBLEM);
         }
 
         if (!player.isCreative()) {
@@ -88,7 +89,7 @@ public class ItemSleepingBag extends Item {
         player.setPose(Pose.SLEEPING);
         player.setSleepingPos(player.blockPosition());
         player.setDeltaMovement(Vec3.ZERO);
-        player.hasImpulse = true;
+        player.needsSync = true;
         player.sleepCounter = 0;
 
         player.awardStat(Stats.SLEEP_IN_BED);
