@@ -38,19 +38,19 @@ public class ItemSleepingBag extends Item {
         }
 
         if (!playerIn.onGround()) {
-            playerIn.displayClientMessage(Component.translatable("message.sleeping_bags.cant_sleep_in_air"), true);
+            playerIn.sendOverlayMessage(Component.translatable("message.sleeping_bags.cant_sleep_in_air"));
             return InteractionResult.SUCCESS;
         }
 
         BedRule value = level.environmentAttributes().getValue(EnvironmentAttributes.BED_RULE, playerIn.blockPosition());
         if (value.canSleep().equals(BedRule.Rule.NEVER)) {
-            playerIn.displayClientMessage(Component.translatable("message.sleeping_bags.cant_sleep_here"), true);
+            playerIn.sendOverlayMessage(Component.translatable("message.sleeping_bags.cant_sleep_here"));
             return InteractionResult.SUCCESS;
         }
 
         trySleep((ServerPlayer) playerIn).ifLeft((sleepResult) -> {
             if (sleepResult != null && sleepResult.message() != null) {
-                playerIn.displayClientMessage(sleepResult.message(), true);
+                playerIn.sendOverlayMessage(sleepResult.message());
             }
         });
 
