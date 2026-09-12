@@ -8,9 +8,11 @@ version = "${mod_version}"
 displayName = "Sleeping Bags"
 updateJSONURL = "https://update.maxhenkel.de/neoforge/sleeping_bags"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/sleeping-bags"
-logoFile = "icon.png"
+bannerFile = "icon.png"
 authors = "Max Henkel"
 description = '''Sleeping bags'''
+[[mixins]]
+config = "sleeping_bags.mixins.json"
 [[dependencies.sleeping_bags]]
 modId = "neoforge"
 type = "required"
